@@ -24,6 +24,12 @@ url = 'https://www.googleapis.com/youtube/v3/commentThreads'
 
 
 def extract_video_id(link):
+    """
+    Extrae el ID de un video de YouTube de un enlace de YouTube.
+    :param link:
+    :return:
+    """
+
     # Utiliza una expresión regular para extraer el ID del video de un enlace de YouTube
     match = re.search(
         r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})',
@@ -36,6 +42,16 @@ def extract_video_id(link):
 
 
 def retrieve_comments(params):
+    """
+    Realiza una solicitud GET a la API de YouTube para obtener comentarios de un video específico.
+    :param params:
+    :param url:     URL de la API para obtener comentarios de un video específico
+    :param video_id:    ID del video de YouTube
+    :param API_KEY:     API_KEY de YouTube
+    :param text_format: Formato de texto de los comentarios
+    :param max_results: Cantidad máxima de comentarios a obtener
+    :return:   DataFrame con los comentarios
+    """
     # Realizar la solicitud GET a la API de YouTube
     response = requests.get(url, params=params)
 
@@ -49,7 +65,6 @@ def retrieve_comments(params):
         for item in data['items']:
             comment_text = item['snippet']['topLevelComment']['snippet']['textDisplay']
             comments_list.append(comment_text)
-            #st.write("Comentario Principal: ", comment_text)
 
             # Obtener respuestas a comentarios (si las hay)
             if 'replies' in item.keys():
@@ -57,7 +72,7 @@ def retrieve_comments(params):
                 for reply in replies:
                     reply_text = reply['snippet']['textDisplay']
                     comments_list.append(reply_text)
-                    #st.write("Respuesta: ", reply_text)
+
 
         # Convertir la lista de comentarios en un DataFrame
         df_comments = pd.DataFrame(comments_list, columns=['Comment'])
@@ -73,12 +88,10 @@ def execute_pipeline(data):
 
     # Apply the pipeline to the input data
     y_pred = loaded_pipeline.predict(data)
-
-    # Save the predictions in the DataFrame
-    #data['IsHatred'] = y_pred
-    #data.to_csv('pred_comment.csv', mode="a", header=False, index=False)
-
     return y_pred
+
+def apply_row_colors(series, color1, color2):
+    return ['background-color: {}'.format(color1) if i % 2 == 0 else 'background-color: {}'.format(color2) for i in range(len(series))]
 
 
 # Configurar la información personalizada en la sección "About"
@@ -96,7 +109,7 @@ about_text = """
 # Page Configuration
 st.set_page_config(
     page_title="YouTube NLP Predict App",
-    page_icon="🛫",
+    page_icon="🍿",
     layout="wide",
     initial_sidebar_state="auto",
     menu_items={
@@ -116,51 +129,61 @@ st.write(" ")
 col1, col2 = st.columns([0.5,0.5],gap="medium")
 # Inicializa una variable para controlar la visibilidad del formulario
 #show_form = False
+
+with col1:
+    # Solicitar al usuario un enlace de YouTube
+    st.markdown('##### Ingrese el enlace de YouTube del video del que desea obtener comentarios.')
+    youtube_link = st.text_input('label ', key='link',
+                                 placeholder='Introduzca el link del vídeo aquí',
+                                 label_visibility= 'collapsed' )
+
+    # Obtener el ID del video de YouTube
+    video_id = extract_video_id(youtube_link)
+
+    # Parámetros de la solicitud
+    params = {
+        'part': 'snippet, replies',
+        'videoId': video_id,
+        'key': API_KEY,
+        'textFormat': 'plainText',  # Puedes cambiar el formato de texto según tus preferencias
+        'maxResults': 30,  # Cantidad máxima de comentarios a obtener
+    }
+
+
+    # Verificar si el enlace es válido y se ha introducido alguno
+    if youtube_link and video_id:
+        st.success("Enlace válido. ID del video: {}".format(video_id))
+    elif youtube_link:
+        st.warning("El enlace no es válido. Por favor, ingrese un enlace de YouTube válido.")
+
+with col2:
+    # Mostrar el video de YouTube si el enlace es válido
+    if 'video_id'  and video_id:
+        st.video('https://www.youtube.com/watch?v=' + video_id)
+
 with st.form('predict_form'):
-    with col1:
-        # Solicitar al usuario un enlace de YouTube
-        st.markdown('##### Ingrese el enlace de YouTube del video del que desea obtener comentarios.')
-        youtube_link = st.text_input('label ', key='link',
-            placeholder='Introduzca el link del vídeo aquí',
-            label_visibility= 'collapsed' )
-
-        # Obtener el ID del video de YouTube
-        video_id = extract_video_id(youtube_link)
-
-        # Parámetros de la solicitud
-        params = {
-            'part': 'snippet, replies',
-            'videoId': video_id,
-            'key': API_KEY,
-            'textFormat': 'plainText',  # Puedes cambiar el formato de texto según tus preferencias
-            'maxResults': 30,  # Cantidad máxima de comentarios a obtener
-        }
-
-
-        # Verificar si el enlace es válido y se ha introducido alguno
-        if youtube_link and video_id:
-            st.success("Enlace válido. ID del video: {}".format(video_id))
-        elif youtube_link:
-            st.warning("El enlace no es válido. Por favor, ingrese un enlace de YouTube válido.")
-
-    with col2:
-        # Mostrar el video de YouTube si el enlace es válido
-        if 'video_id'  and video_id:
-            st.video('https://www.youtube.com/watch?v=' + video_id)
-
-
     submit = st.form_submit_button('OBTENER PREDICCIÓN')
     if submit:
         # Obtener comentarios
         df_comments = retrieve_comments(params)
         prediction = execute_pipeline(df_comments['Comment'])
-        print(prediction)
+
+        # Mapear los valores de la columna "Prediction" a emojis
+        prediction_emojis = ["🤬" if pred.any() else "😊" for pred in prediction]
+
+        # Crear un DataFrame con las columnas "Comment" y "Prediction" (con emojis)
+        results_df = pd.DataFrame({'Comment': df_comments['Comment'], 'Prediction': prediction_emojis})
+
+        # Mostrar los resultados
         st.subheader('Resultados de la predicción para cada comentario:')
-        for comment, pred in zip(df_comments['Comment'], prediction):
-            if pred.any() == 1:
-                st.write(f"El comentario '{comment}' es tóxico.")
-            else:
-                st.write(f"El comentario '{comment}' no es tóxico.")
+        st.table(results_df.style.apply(lambda row: apply_row_colors(row, 'lightblue', 'lightcyan'), axis=0))
+
+        # st.subheader('Resultados de la predicción para cada comentario:')
+        # for comment, pred in zip(df_comments['Comment'], prediction):
+        #     if pred.any() == 1:
+        #         st.markdown(f"The comment: '**{comment}**'  :red[**IT'S TOXIC**.] :rage:", unsafe_allow_html=True)
+        #     else:
+        #         st.markdown(f"The comment: '**{comment}**' :green[**IT ISN'T TOXIC**.] :smiley:", unsafe_allow_html=True)
 
 
 

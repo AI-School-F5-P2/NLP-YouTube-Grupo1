@@ -11,8 +11,6 @@ from sklearn.base import BaseEstimator, TransformerMixin
 # Setting SpaCy in English
 nlp = spacy.load("en_core_web_sm")
 
-# Creating a pipeline with our preprocessing steps and the logistic regression classifier
-
 # Custom Transformer Class for our text preprocessing function
 class TextPreprocessor(BaseEstimator, TransformerMixin):
     def __init__(self):
@@ -23,7 +21,6 @@ class TextPreprocessor(BaseEstimator, TransformerMixin):
 
     def transform(self, x_series):
         # Applying contractions fix
-        #x_series = x_series.apply(lambda x: contractions.fix(x))
         x_series = x_series.apply(contractions.fix)
 
         # Applying preprocess function
