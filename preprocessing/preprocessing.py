@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import spacy
 import re
+from spacymoji import Emoji
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
@@ -10,6 +11,9 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 # Setting SpaCy in English
 nlp = spacy.load("en_core_web_sm")
+
+# Adding the emoji parser to SpaCy's pipeline
+nlp.add_pipe("emoji", first=True)
 
 # Custom Transformer Class for our text preprocessing function
 class TextPreprocessor(BaseEstimator, TransformerMixin):

@@ -23,6 +23,8 @@ with open(path_to_pipeline, 'rb') as file:
 url = 'https://www.googleapis.com/youtube/v3/commentThreads'
 
 
+form_state = False
+
 def extract_video_id(link):
     """
     Extrae el ID de un video de YouTube de un enlace de YouTube.
@@ -153,6 +155,7 @@ with col1:
     # Verificar si el enlace es válido y se ha introducido alguno
     if youtube_link and video_id:
         st.success("Enlace válido. ID del video: {}".format(video_id))
+        form_state = True
     elif youtube_link:
         st.warning("El enlace no es válido. Por favor, ingrese un enlace de YouTube válido.")
 
@@ -161,22 +164,24 @@ with col2:
     if 'video_id'  and video_id:
         st.video('https://www.youtube.com/watch?v=' + video_id)
 
-with st.form('predict_form'):
-    submit = st.form_submit_button('OBTENER PREDICCIÓN')
-    if submit:
-        # Obtener comentarios
-        df_comments = retrieve_comments(params)
-        prediction = execute_pipeline(df_comments['Comment'])
+if form_state:
+    with st.form('predict_form'):
+        submit = st.form_submit_button('OBTENER PREDICCIÓN')
+        if submit:
+            # Obtener comentarios
+            df_comments = retrieve_comments(params)
+            prediction = execute_pipeline(df_comments['Comment'])
 
-        # Mapear los valores de la columna "Prediction" a emojis
-        prediction_emojis = ["🤬" if pred.any() else "😊" for pred in prediction]
+            # Mapear los valores de la columna "Prediction" a emojis
+            prediction_emojis = ["🤬" if pred.any() else "😊" for pred in prediction]
 
-        # Crear un DataFrame con las columnas "Comment" y "Prediction" (con emojis)
-        results_df = pd.DataFrame({'Comment': df_comments['Comment'], 'Prediction': prediction_emojis})
+            # Crear un DataFrame con las columnas "Comment" y "Prediction" (con emojis)
+            results_df = pd.DataFrame({'Comment': df_comments['Comment'], 'Prediction': prediction_emojis})
 
-        # Mostrar los resultados
-        st.subheader('Resultados de la predicción para cada comentario:')
-        st.table(results_df.style.apply(lambda row: apply_row_colors(row, 'lightblue', 'lightcyan'), axis=0))
+            # Mostrar los resultados
+            st.subheader('Resultados de la predicción para cada comentario:')
+            st.table(results_df.style.apply(lambda row: apply_row_colors(row, 'lightblue', 'lightcyan'), axis=0))
+            form_state = False
 
         # st.subheader('Resultados de la predicción para cada comentario:')
         # for comment, pred in zip(df_comments['Comment'], prediction):
