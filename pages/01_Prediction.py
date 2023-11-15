@@ -82,7 +82,7 @@ def retrieve_comments(params):
         print(df_comments.head())
 
     else:
-        print(f"Error al obtener comentarios. Código de estado: {response.status_code}")
+        print(f"Error getting comments. Status code: {response.status_code}")
 
     return df_comments
 
