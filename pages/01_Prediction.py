@@ -23,7 +23,8 @@ with open(path_to_pipeline, 'rb') as file:
 url = 'https://www.googleapis.com/youtube/v3/commentThreads'
 
 
-form_state = False
+# Inicializa una variable para controlar la visibilidad del formulario
+show_form = False
 
 def extract_video_id(link):
     """
@@ -121,7 +122,7 @@ st.set_page_config(
 
 
 st.title('NLP YouTube Comments')
-st.subheader('Vamos a predecir si los comentarios de un vídeo son tóxicos o no.')
+st.subheader("Let\'s predict if the video\'s comments are Toxic or not.")
 st.write(" ")
 st.write(" ")
 st.write(" ")
@@ -129,14 +130,14 @@ st.write(" ")
 
 # Crea columnas para mostrar la solicitud video y el video de YouTube
 col1, col2 = st.columns([0.5,0.5],gap="medium")
-# Inicializa una variable para controlar la visibilidad del formulario
-#show_form = False
+
+
 
 with col1:
     # Solicitar al usuario un enlace de YouTube
-    st.markdown('##### Ingrese el enlace de YouTube del video del que desea obtener comentarios.')
+    st.markdown('##### Enter the YouTube link of the video from which you want to retrieve comments.')
     youtube_link = st.text_input('label ', key='link',
-                                 placeholder='Introduzca el link del vídeo aquí',
+                                 placeholder='Enter the video link here."',
                                  label_visibility= 'collapsed' )
 
     # Obtener el ID del video de YouTube
@@ -154,19 +155,19 @@ with col1:
 
     # Verificar si el enlace es válido y se ha introducido alguno
     if youtube_link and video_id:
-        st.success("Enlace válido. ID del video: {}".format(video_id))
-        form_state = True
+        st.success("The link is valid.")
+        show_form = True
     elif youtube_link:
-        st.warning("El enlace no es válido. Por favor, ingrese un enlace de YouTube válido.")
+        st.warning("The link is not valid. Please enter a valid YouTube link.")
 
 with col2:
     # Mostrar el video de YouTube si el enlace es válido
     if 'video_id'  and video_id:
         st.video('https://www.youtube.com/watch?v=' + video_id)
 
-if form_state:
+if show_form:
     with st.form('predict_form'):
-        submit = st.form_submit_button('OBTENER PREDICCIÓN')
+        submit = st.form_submit_button('GET PREDICTION')
         if submit:
             # Obtener comentarios
             df_comments = retrieve_comments(params)
@@ -179,16 +180,10 @@ if form_state:
             results_df = pd.DataFrame({'Comment': df_comments['Comment'], 'Prediction': prediction_emojis})
 
             # Mostrar los resultados
-            st.subheader('Resultados de la predicción para cada comentario:')
+            st.subheader('Prediction results for each comment:')
             st.table(results_df.style.apply(lambda row: apply_row_colors(row, 'lightblue', 'lightcyan'), axis=0))
-            form_state = False
+            show_form = False
 
-        # st.subheader('Resultados de la predicción para cada comentario:')
-        # for comment, pred in zip(df_comments['Comment'], prediction):
-        #     if pred.any() == 1:
-        #         st.markdown(f"The comment: '**{comment}**'  :red[**IT'S TOXIC**.] :rage:", unsafe_allow_html=True)
-        #     else:
-        #         st.markdown(f"The comment: '**{comment}**' :green[**IT ISN'T TOXIC**.] :smiley:", unsafe_allow_html=True)
 
 
 

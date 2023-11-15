@@ -16,7 +16,7 @@ about_text = """
 # Page Configuration
 st.set_page_config(
     page_title="YouTube NLP Predict App",
-    page_icon="🛫",
+    page_icon="🍿",
     layout="wide",
     initial_sidebar_state="auto",
     menu_items={
