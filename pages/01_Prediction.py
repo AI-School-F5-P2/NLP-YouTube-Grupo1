@@ -4,6 +4,10 @@ import requests
 import re
 import pandas as pd
 import os
+from st_files_connection import FilesConnection
+import s3fs
+
+
 from dotenv import load_dotenv
 
 from preprocessing.preprocessing import preprocess_text, tokenize_text, remove_stopwords, TextPreprocessor, Tokenizer, identity_tokenizer
@@ -11,13 +15,39 @@ from preprocessing.preprocessing import preprocess_text, tokenize_text, remove_s
 # Load the environment variables
 load_dotenv()
 
+# Configurar las credenciales de AWS
+aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+# Create connection object and retrieve file contents.
+#conn = st.connection('s3', type=FilesConnection)
+# Configurar la conexión a S3
+#s3_conn = st.connection('s3', type=FilesConnection)
+s3 = s3fs.S3FileSystem(key=aws_access_key_id, secret=aws_secret_access_key)
+
 # access the environment variables
 API_KEY = os.getenv("API_KEY")
 path_to_pipeline = os.environ.get('PATH_TO_PIPELINE')
 
+# Acceder a la variable de entorno que contiene la ruta al archivo sensible
+cloud_storage_path = os.getenv("PATH_TO_PIPELINE_AWS")
+
+# Leer el contenido del archivo desde S3
+with s3.open(cloud_storage_path, 'rb') as s3_file:
+    #file_content = s3_file.read()
+    loaded_pipeline = pickle.load(s3_file)
+
+# Conectar a S3
+#s3_conn._instance.connect(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
+# Cargar un archivo desde S3
+#file_content = s3_conn.read_file(cloud_storage_path)
+
+
+
 # Load the pipeline from the pickle file
-with open(path_to_pipeline, 'rb') as file:
-    loaded_pipeline = pickle.load(file)
+#with open(file_content, 'rb') as file:
+#    loaded_pipeline = pickle.load(file)
 
 # URL de la API para obtener comentarios de un video específico
 url = 'https://www.googleapis.com/youtube/v3/commentThreads'
