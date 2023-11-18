@@ -211,7 +211,7 @@ if show_form:
 
             # Mostrar los resultados
             st.subheader('Prediction results for each comment:')
-            st.table(results_df.style.apply(lambda row: apply_row_colors(row, 'lightblue', 'lightcyan'), axis=0))
+            st.table(results_df.style.apply(lambda row: apply_row_colors(row, '#fdfbf9', '#f8eaec'), axis=0))
             show_form = False
 
 

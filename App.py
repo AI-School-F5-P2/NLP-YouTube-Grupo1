@@ -24,25 +24,31 @@ st.set_page_config(
     }
 )
 
-image = 'YT_logo.png'
-img_width = 250
-img_height = 250
+image = 'yt_logo_name.png'
+img_width = 350
+img_height = 350
+
+left_co, cent_co,last_co = st.columns([0.3,0.6,0.3])
+with cent_co:
+     st.image(image, width=img_width)
+
+st.write(" ")
+st.write(" ")
+
+#col_1, col2_, col_3 = st.columns([0.3,0.6,0.4],)
+#with col2_:
+    # st.markdown("# NLP Comments Prediction App")
 
 
 col1, col2 = st.columns([0.2,0.9],)
-with st.container():
-    with col1:
-        st.image(image, width=img_width)
-    with col2:
-        st.header("YouTube NLP Comments Prediction App")
-        st.subheader('Natural Language Processing.')
 
-col3,col4 = st.columns([0.7,0.3],)
-with col3:
 
-    st.write(" ")
-    st.write(" ")
-    st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
+col3,col4, col5 = st.columns([0.1,0.6,0.2],)
+with col4:
+    st.markdown("# NLP Comments Prediction App")
     st.write(" ")
     multi = ''' In the current context of the growing concern over hate messages in video comments on YouTube, 
     the platform faces a significant challenge in maintaining a safe and positive environment for its users. 
@@ -59,5 +65,3 @@ with col3:
     '''
 
     st.markdown(multi)
-with col4:
-    st.write(" ")
