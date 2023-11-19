@@ -24,6 +24,7 @@ st.set_page_config(
     }
 )
 
+# positioning logo
 image = 'yt_logo_name.png'
 img_width = 350
 img_height = 350
@@ -34,18 +35,10 @@ with cent_co:
 
 st.write(" ")
 st.write(" ")
-
-#col_1, col2_, col_3 = st.columns([0.3,0.6,0.4],)
-#with col2_:
-    # st.markdown("# NLP Comments Prediction App")
-
-
-col1, col2 = st.columns([0.2,0.9],)
-
-
 st.write(" ")
 st.write(" ")
 st.write(" ")
+
 col3,col4, col5 = st.columns([0.1,0.6,0.2],)
 with col4:
     st.markdown("# NLP Comments Prediction App")

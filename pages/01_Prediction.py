@@ -19,10 +19,7 @@ load_dotenv()
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
 aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
-# Create connection object and retrieve file contents.
-#conn = st.connection('s3', type=FilesConnection)
 # Configurar la conexión a S3
-#s3_conn = st.connection('s3', type=FilesConnection)
 s3 = s3fs.S3FileSystem(key=aws_access_key_id, secret=aws_secret_access_key)
 
 # access the environment variables
@@ -34,20 +31,8 @@ cloud_storage_path = os.getenv("PATH_TO_PIPELINE_AWS")
 
 # Leer el contenido del archivo desde S3
 with s3.open(cloud_storage_path, 'rb') as s3_file:
-    #file_content = s3_file.read()
     loaded_pipeline = pickle.load(s3_file)
 
-# Conectar a S3
-#s3_conn._instance.connect(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-
-# Cargar un archivo desde S3
-#file_content = s3_conn.read_file(cloud_storage_path)
-
-
-
-# Load the pipeline from the pickle file
-#with open(file_content, 'rb') as file:
-#    loaded_pipeline = pickle.load(file)
 
 # URL de la API para obtener comentarios de un video específico
 url = 'https://www.googleapis.com/youtube/v3/commentThreads'
@@ -118,13 +103,27 @@ def retrieve_comments(params):
 
 
 def execute_pipeline(data):
+    """
+    Ejecuta el pipeline de preprocesamiento y predicción.
+    :param data:   Comentarios de YouTube
+    :return:    Predicción de toxicidad
+    """
 
     # Apply the pipeline to the input data
     y_pred = loaded_pipeline.predict(data)
     return y_pred
 
+
 def apply_row_colors(series, color1, color2):
-    return ['background-color: {}'.format(color1) if i % 2 == 0 else 'background-color: {}'.format(color2) for i in range(len(series))]
+    """
+    Aplica colores a las filas de un DataFrame.
+    :param series:  Series del DataFrame
+    :param color1:  Color 1
+    :param color2:  Color 2
+    :return:    Lista de colores para cada fila
+    """
+    return ['background-color: {}'.format(color1) if i % 2 == 0 else 'background-color: {}'.format(color2)
+            for i in range(len(series))]
 
 
 # Configurar la información personalizada en la sección "About"
@@ -150,6 +149,7 @@ st.set_page_config(
     }
 )
 
+# positioning logo
 image = 'yt_logo_name.png'
 img_width = 300
 img_height = 300
@@ -167,7 +167,6 @@ st.write(" ")
 st.subheader("Let\'s predict if the video\'s comments are Toxic or not.")
 st.write(" ")
 st.write(" ")
-
 
 
 # Crea columnas para mostrar la solicitud video y el video de YouTube
@@ -222,8 +221,3 @@ if show_form:
             st.subheader('Prediction results for each comment:')
             st.table(results_df.style.apply(lambda row: apply_row_colors(row, '#fdfbf9', '#f8eaec'), axis=0))
             show_form = False
-
-
-
-
-

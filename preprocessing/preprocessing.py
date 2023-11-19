@@ -7,8 +7,6 @@ from spacymoji import Emoji
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
-
-
 # Setting SpaCy in English
 nlp = spacy.load("en_core_web_sm")
 
@@ -57,6 +55,11 @@ def identity_tokenizer(text):
 # Function for preprocessing text
 # Pasar a minúsculas, eliminar caracteres especiales
 def preprocess_text(text):
+    """
+    Preprocessing text function
+    :param text:    Text to be processed
+    :return:        Cleaned text
+    """
     # Convierte todo el texto en a minúsculas
     text = text.lower()
 
@@ -80,14 +83,23 @@ def preprocess_text(text):
 
 
 # Function for tokenization
-# Tokenización del texto
 def tokenize_text(text):
+    """
+    Tokenization function
+    :param text:Text to be tokenized
+    :return:    List of tokens
+    """
     doc = nlp(text)
     tokens = [token.text for token in doc]
     return tokens
 
 # Función para eliminar las stopwords de un texto tokenizado
 def remove_stopwords(text_tokens):
+    """
+    Function for removing stopwords from a tokenized text
+    :param text_tokens:  List of tokens
+    :return:  List of tokens without stopwords
+    """
     doc = nlp(" ".join(text_tokens))
     tokens_without_stopwords = [token.text for token in doc if not token.is_stop]
     return tokens_without_stopwords
