@@ -150,24 +150,33 @@ st.set_page_config(
     }
 )
 
+image = 'yt_logo_name.png'
+img_width = 300
+img_height = 300
 
-st.title('NLP YouTube Comments')
+left_co, cent_co,last_co = st.columns([0.3,0.6,0.3])
+with left_co:
+     st.image(image, width=img_width)
+
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
+
 st.subheader("Let\'s predict if the video\'s comments are Toxic or not.")
 st.write(" ")
 st.write(" ")
-st.write(" ")
+
 
 
 # Crea columnas para mostrar la solicitud video y el video de YouTube
 col1, col2 = st.columns([0.5,0.5],gap="medium")
-
-
-
 with col1:
     # Solicitar al usuario un enlace de YouTube
     st.markdown('##### Enter the YouTube link of the video from which you want to retrieve comments.')
     youtube_link = st.text_input('label ', key='link',
-                                 placeholder='Enter the video link here."',
+                                 placeholder='Enter the video link here.',
                                  label_visibility= 'collapsed' )
 
     # Obtener el ID del video de YouTube
@@ -179,7 +188,7 @@ with col1:
         'videoId': video_id,
         'key': API_KEY,
         'textFormat': 'plainText',  # Puedes cambiar el formato de texto según tus preferencias
-        'maxResults': 30,  # Cantidad máxima de comentarios a obtener
+        'maxResults': 100,  # Cantidad máxima de comentarios a obtener
     }
 
 
