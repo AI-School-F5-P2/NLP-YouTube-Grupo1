@@ -28,9 +28,9 @@ The model has been deployed in a production environment, leveraging cloud servic
 
 ## Repository Structure
 
-- **README.md:** Project usage guide.
-- **requirements.txt:** Install this file to ensure your environment has all the necessary libraries. You can install it by running "pip install -r requirements.txt" in the terminal.
-- **.gitignore:** Prevents selected files and folders from being uploaded to the repository.
+- **`README.md`:** Project usage guide.
+- **`requirements.txt`:** Install this file to ensure your environment has all the necessary libraries. You can install it by running "pip install -r requirements.txt" in the terminal.
+- **`.gitignore`:** Prevents selected files and folders from being uploaded to the repository.
 
 ### Code Files
 
