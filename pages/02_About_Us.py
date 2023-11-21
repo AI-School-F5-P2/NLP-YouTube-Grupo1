@@ -3,7 +3,7 @@ import streamlit as st
 
 # Configurar la información personalizada en la sección "About"
 about_text = """
-**YouTube NLP Comments. Grupo 1**
+**YouTube Hate Speech Detection. Grupo 1**
 
 **Coders:**
 - Ana Milena Gómez Giraldo
@@ -15,7 +15,7 @@ about_text = """
 """
 # Page Configuration
 st.set_page_config(
-    page_title="YouTube NLP Predict App",
+    page_title="YouTube Hate Speech Detection App",
     page_icon="🍿",
     layout="wide",
     initial_sidebar_state="auto",

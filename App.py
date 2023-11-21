@@ -1,9 +1,10 @@
 import streamlit as st
+import pandas as pd
 
 
 # Configurar la información personalizada en la sección "About"
 about_text = """
-**YouTube NLP Comments. Grupo 1**
+**YouTube Hate Speech Detection. Grupo 1**
 
 **Coders:**
 - Ana Milena Gómez Giraldo
@@ -15,7 +16,7 @@ about_text = """
 """
 # Page Configuration
 st.set_page_config(
-    page_title="YouTube NLP Predict App",
+    page_title="YouTube Hate Speech Detection App",
     page_icon="🍿",
     layout="wide",
     initial_sidebar_state="auto",
@@ -23,6 +24,14 @@ st.set_page_config(
         'About': about_text
     }
 )
+
+# Dataframe with the results
+results_df = pd.DataFrame({
+    'Metric': ['Accuracy','Recall', 'Precision', 'F1-Score'],
+    'Value': ['71%', '94%', '66%', '77%']
+})
+
+
 
 # positioning logo
 image = 'yt_logo_name.png'
@@ -41,7 +50,7 @@ st.write(" ")
 
 col3,col4, col5 = st.columns([0.1,0.6,0.2],)
 with col4:
-    st.markdown("# NLP Comments Prediction App")
+    st.markdown("# YouTube Hate Speech Detection App")
     st.write(" ")
     multi = ''' In the current context of the growing concern over hate messages in video comments on YouTube, 
     the platform faces a significant challenge in maintaining a safe and positive environment for its users. 
@@ -55,10 +64,20 @@ with col4:
     This project not only aims to address the increasing prevalence of hate messages but also to find a solution 
     that can adapt and scale efficiently with the constant growth of the platform. The implementation of this 
     solution is essential to maintain a safe, inclusive, and harmful-content-free online environment.
-    
-    
-    Metrics
-    
+   
     '''
 
     st.markdown(multi)
+
+    st.write(" ")
+    st.write(" ")
+
+    st.markdown("##### Metrics")
+    multi = ''' We have employed cross-validation and hyperparameter tuning to ensure the robustness of the model.
+    The following metrics correspond to the test subset and indicate that the model generalizes effectively to new data.
+    
+    '''
+    st.markdown(multi)
+    st.write(" ")
+
+    st.dataframe(results_df)
