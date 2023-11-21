@@ -34,23 +34,23 @@ The model has been deployed in a production environment, leveraging cloud servic
 
 ### Code Files
 
-- **App.py:** Interface for detecting hate speech in YouTube comments.
-- **01_Prediction.py:** Prediction script for the final model.
-- **02_About_Us.py:** About us script.
-- **preprocessing.py:** Preprocessing functions.
+- **`App.py`:** Interface for detecting hate speech in YouTube comments.
+- **`01_Prediction.py`:** Prediction script for the final model.
+- **`02_About_Us.py`:** About us script.
+- **`preprocessing.py`:** Preprocessing functions.
 
 
 ### Notebooks
 
-- **Preprocesado+Modelo.ipynb:** Preprocessing and model training.
-- **Embeddings.ipynb:** Embeddings encoding and neural network training.
+- **`Preprocesado+Modelo.ipynb`:** Preprocessing and model training.
+- **`Embeddings.ipynb`:** Embeddings encoding and neural network training.
 
 
 ## Installation and Usage
 
 1. Clone the repository (https://github.com/AI-School-F5-P2/NLP-YouTube-Grupo1.git)
 2. Navigate to your project directory.
-3. Install the required packages by running "pip install -r requirements.txt" in the terminal.
-4. Run the YouTube Hate Speech Detection App using the command "streamlit run App.py" in the terminal.
+3. Install the required packages by running `pip install -r requirements.txt` in the terminal.
+4. Run the YouTube Hate Speech Detection App using the command `streamlit run App.py` in the terminal.
 
 
