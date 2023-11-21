@@ -3,7 +3,7 @@
 ## Overview
 The YouTube Hate Speech Detection project aims to tackle the growing concern of hate speech within video comments on the platform. Faced with the limitations of the existing moderation team and the impracticality of scaling, YouTube has outsourced the challenge to our consulting firm. The goal is to implement an automated solution for detecting hate speech, allowing prompt actions such as content removal or user banning.
 
-The emphasis is on a practical implementation, prioritizing efficiency over precision.
+The emphasis was on a practical implementation, prioritizing efficiency over precision.
 
 ## Solution Description
 Our solution involves developing a Natural Language Processing (NLP) model capable of automatically detecting hate speech in YouTube comments. The practicality of the solution is paramount, ensuring a fast and scalable approach to handle the increasing volume of offensive messages.
@@ -17,13 +17,13 @@ We collected a diverse dataset containing labeled hate speech and non-offensive 
 Data preprocessing tasks, including tokenization, stop word removal, and lemmatization, will be performed to prepare the data for modeling.
 
 ### Model Choice
-We employed different NLP models such as AdaBoost, GradientBoost, RandomForest, Logistic Regression, LGB, KNN but we finally decided to go with the one that gaves us the best and most efficient results and that was MultinomiaNB.
+We employed different Machine Learning algorithms such as AdaBoost, GradientBoost, RandomForest, Logistic Regression, LGB, KNN but we finally decided to go with the one that gaves us the best and most efficient results: MultinomiaNB.
 
 ### Training and Evaluation
 The model was trained on the collected dataset, and its performance will be evaluated using various metrics, ensuring it generalizes well to new comments.
 
 ### Deployment
-The model was deployed in a production environment, potentially leveraging cloud services for scalability and integration with YouTube's comment system.
+The model was deployed in a production environment, leveraging cloud services for scalability and integration with YouTube's comment system.
 
 ## Repository Structure
 
@@ -45,14 +45,9 @@ The model was deployed in a production environment, potentially leveraging cloud
 
 ## Installation and Usage
 
-1. Clone the repository.
+1. Clone the repository (https://github.com/AI-School-F5-P2/NLP-YouTube-Grupo1.git)
 2. Navigate to the project directory.
 3. Install the required packages by running "pip install -r requirements.txt" in the terminal.
 4. Run the YouTube Hate Speech Detection app using the provided scripts.
 
-## Contributing
 
-If you'd like to contribute, please fork the repository, make your changes, and open a pull request following the outlined process in the README.md.
-
-
-**Fork the Project → Create your Feature Branch → Commit your Changes → Push to the Branch → Open a Pull Request**
