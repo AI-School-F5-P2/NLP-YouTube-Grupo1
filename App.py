@@ -55,6 +55,10 @@ with col4:
     This project not only aims to address the increasing prevalence of hate messages but also to find a solution 
     that can adapt and scale efficiently with the constant growth of the platform. The implementation of this 
     solution is essential to maintain a safe, inclusive, and harmful-content-free online environment.
+    
+    
+    Metrics
+    
     '''
 
     st.markdown(multi)

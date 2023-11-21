@@ -51,7 +51,7 @@ with col4:
     st.write(" ")
     st.markdown("#### :sparkles: [Ana Milena Gómez Giraldo](https://www.linkedin.com/in/ana-milena-gomez-giraldo/)")
     st.markdown("#### :sparkles: [Alberto Rodríguez Vaquero](https://www.linkedin.com/in/alberto-rodriguez-vaquero-a81071134/)")
-    st.markdown("#### :sparkles: [Tania Monteiro Blanco](https://www.linkedin.com/in/taniamonvit/)")
+    st.markdown("#### :sparkles: [Tania Monteiro Vitoria](https://www.linkedin.com/in/taniamonvit/)")
     st.markdown("#### :sparkles: [Sandra Gómez Santamaría](https://www.linkedin.com/in/sandragomezs/)")
 
     st.write(" ")
