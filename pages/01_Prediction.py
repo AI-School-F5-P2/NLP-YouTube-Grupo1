@@ -12,6 +12,30 @@ from dotenv import load_dotenv
 
 from preprocessing.preprocessing import preprocess_text, tokenize_text, remove_stopwords, TextPreprocessor, Tokenizer, identity_tokenizer
 
+# Configurar la información personalizada en la sección "About"
+about_text = """
+**YouTube NLP Comments. Grupo 1**
+
+**Coders:**
+- Ana Milena Gómez Giraldo
+- Alberto Rodríguez Vaquero
+- Tania Monteiro Vitoria
+- Sandra Gómez Santamaría.
+
+[Repositorio del proyecto](https://github.com/AI-School-F5-P2/NLP-YouTube-Grupo1.git)
+"""
+# Page Configuration
+st.set_page_config(
+    page_title="YouTube NLP Predict App",
+    page_icon="🍿",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items={
+        'About': about_text
+    }
+)
+
+
 # Load the environment variables
 load_dotenv()
 
@@ -126,28 +150,7 @@ def apply_row_colors(series, color1, color2):
             for i in range(len(series))]
 
 
-# Configurar la información personalizada en la sección "About"
-about_text = """
-**YouTube NLP Comments. Grupo 1**
 
-**Coders:**
-- Ana Gómez
-- Alberto
-- Tania Monteiro
-- Sandra Gómez S.
-
-[Repositorio del proyecto](https://github.com/AI-School-F5-P2/NLP-YouTube-Grupo1.git)
-"""
-# Page Configuration
-st.set_page_config(
-    page_title="YouTube NLP Predict App",
-    page_icon="🍿",
-    layout="wide",
-    initial_sidebar_state="auto",
-    menu_items={
-        'About': about_text
-    }
-)
 
 # positioning logo
 image = 'yt_logo_name.png'

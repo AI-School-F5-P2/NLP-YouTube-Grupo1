@@ -6,10 +6,10 @@ about_text = """
 **YouTube NLP Comments. Grupo 1**
 
 **Coders:**
-- Ana Gómez
-- Alberto
-- Tania Monteiro
-- Sandra Gómez S.
+- Ana Milena Gómez Giraldo
+- Alberto Rodríguez Vaquero
+- Tania Monteiro Vitoria
+- Sandra Gómez Santamaría.
 
 [Repositorio del proyecto](https://github.com/AI-School-F5-P2/NLP-YouTube-Grupo1.git)
 """
