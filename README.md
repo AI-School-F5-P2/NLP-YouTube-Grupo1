@@ -14,13 +14,14 @@ Our solution involves developing a Natural Language Processing (NLP) model capab
 We collected a diverse dataset containing labeled hate speech and non-offensive comments, crucial for training and evaluating our model.
 
 ### Preprocessing
-Data preprocessing tasks, including tokenization, stop word removal, and lemmatization, will be performed to prepare the data for modeling.
+
+Data preprocessing tasks have been performed, such as converting text to lowercase, removing special characters, whitespace, and numbers; also, text tokenization, removal of stopwords, and vectorization
 
 ### Model Choice
 We employed different Machine Learning algorithms such as AdaBoost, GradientBoost, RandomForest, Logistic Regression, LGB, KNN but we finally decided to go with the one that gaves us the best and most efficient results: MultinomiaNB.
 
 ### Training and Evaluation
-The model was trained on the collected dataset, and its performance will be evaluated using various metrics, ensuring it generalizes well to new comments.
+The model has been trained on the collected dataset, and its performance will be evaluated using various metrics, ensuring it generalizes well to new comments.
 
 ### Deployment
 The model was deployed in a production environment, leveraging cloud services for scalability and integration with YouTube's comment system.
