@@ -52,5 +52,6 @@ The model has been deployed in a production environment, leveraging cloud servic
 2. Navigate to your project directory.
 3. Install the required packages by running `pip install -r requirements.txt` in the terminal.
 4. Run the YouTube Hate Speech Detection App using the command `streamlit run App.py` in the terminal.
+5. Link to the App deployed in the cloud: https://nlp-comments.streamlit.app/
 
 
